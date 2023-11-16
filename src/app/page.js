@@ -1,94 +1,67 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import logo from './images/logo.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 export default function Home() {
+  const generateDataTable = () => {
+    const data = [];
+    for (let i = 1; i <= 15; i++) {
+      data.push({
+        id: i,
+        name: `Name ${i}`,
+        type: `Type ${i}`,
+        createdAt: `Date ${i}`,
+        tags: `Tag ${i}`
+      });
+    }
+    return data;
+  };
+
+  const dataTable = generateDataTable()
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+      <nav className={styles.navbar}>
+        <a className={styles.navImage} href='#'>
+          <Image src={logo} width={103} height={89} />
+          <span className={styles.navTitle}>Extracta</span>
+        </a>
+        <div className={styles.navDiv}>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      </nav>
+      <div style={{ textAlign: "center" }}>
+        <div className={styles.mainBody}>
+          <div className={`table-responsive ${styles.tableContainer}`} style={{ height: '60vh', overflowY: 'auto' }}>
+            <table className="table table-striped table-hover" style={{ width: '100%', backgroundColor: "#A69CAC !important", borderCollapse: "collapse", fontSize: "1.2rem" }}>
+              <thead>
+                <tr>
+                  <th className={styles.th} style={{ width: '25%' }}>Name</th>
+                  <th className={styles.th} style={{ width: '20%' }} >Type</th>
+                  <th className={styles.th} style={{ width: '20%' }} >Created At</th>
+                  <th className={styles.th} style={{ width: '25%' }} >Tags</th>
+                  <th className={styles.th} style={{ width: '10%' }} >Download</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dataTable.map(row => (
+                  <tr key={row.id}>
+                    <td className={styles.td} style={{ width: '25%' }} >{row.name}</td>
+                    <td className={styles.td} style={{ width: '20%' }} >{row.type}</td>
+                    <td className={styles.td} style={{ width: '20%' }} >{row.createdAt}</td>
+                    <td className={styles.td} style={{ width: '25%' }} >{row.tags}</td>
+                    <td className={styles.td} style={{ width: '10%' }} >
+                      <a className={`btn ${styles.downloadButton}`} style={{display: 'flex', backgroundColor:"inherit", boxShadow:"none", fontSize:20, border:'solid 0px white', padding:2}} >
+                        <FontAwesomeIcon icon={faDownload} style={{height:20}} /></a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </main>
   )
